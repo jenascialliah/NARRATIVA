@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Narrativa - Hint</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('images/bg_prologue.png') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      width: 150px;
+      cursor: pointer;
+    }
+.nyxa-dialogue {
+  position: absolute;
+  bottom: 100px; /* distance above Nyxa */
+  left: 60%;
+  transform: translateX(-50%);
+  width: 600px;
+  z-index: 2;
+}
+
+.nyxa-dialogue img.bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 600px;
+  height: 140px;
+  z-index: 1;
+}
+
+.nyxa-dialogue img.text {
+  position: relative;
+  width: 500px;
+  z-index: 2;
+  top: 30px;
+  left: 20px;
+}
+
+.nyxa-box {
+  position: absolute;
+  bottom: 0;
+  left: 90%;
+  transform: translateX(-50%);
+  width: 350px;
+  z-index: 2;
+}
+
+
+.requirements {
+  position: absolute;
+  bottom: 130px; /* already adjusted to be higher */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 0;
+}
+
+.requirements img {
+  width: 87%; /* or try 80%, 70% depending on how small you want it */
+  max-width: 1200px; /* optional limit */
+}
+
+.back-btn {
+  position: absolute;
+  top: 30px;
+  left: 50px;
+  display: inline-block;
+   z-index: 999;
+}
+
+.back-btn img {
+  width: 150px;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.back-btn:hover img {
+  transform: scale(1.05);
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <!-- Back to Puzzle Button -->
+   <a href="second_page.html" class="back-btn">
+  <img src="images/backtopuzzle.png" alt="Back to Puzzle">
+</a>
+
+    <!-- Nyxa Dialogue -->
+    <div class="nyxa-dialogue">
+      <img src="images/complete_dialogue_bg.png" alt="Orange Box" class="bg">
+      <img src="images/hint_dialogue.png" alt="Nyxa Dialogue" class="text">
+    </div>
+
+    <!-- Nyxa Character Box -->
+    <div class="nyxa-box">
+      <img src="images/nyxa_withcharac.png" alt="Nyxa" style="width: 300px;">
+    </div>
+
+    <!-- Requirements Box -->
+    <div class="requirements">
+      <img src="images/hint_content3.png" alt="Requirements" style="width: 1450px;">
+    </div>
+
+  </div>
+</body>
+</html>

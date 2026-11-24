@@ -1,0 +1,52 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  background: url('images/bgbook.png') no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Georgia', serif;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+@keyframes logoZoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.credit-list {
+  position: fixed;
+  top: 19%;
+  left: 25%;
+  width: 70%;
+  max-width: 900px;
+  transform: scale(0.2);
+  animation: logoZoomIn 2s ease-out forwards;
+  animation-delay: 0.3s;
+}
+
+/* Back to Menu Button */
+.back-button {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.back-button:hover {
+  transform: translateX(-50%) scale(1.05);
+}

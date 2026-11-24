@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Narrativa - Ending</title>
+  <link rel="stylesheet" href="start.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="dialogue1">
+      <img src="images/long_message.png" alt="Dialogue Background" />
+    </div>
+
+
+    
+      <img src="images/returnbtn.png" alt="Approach Button" class="approach-button1"  />
+
+  </div>
+  <!-- Fade overlay -->
+<div id="fade-overlay" style="opacity: 1;"></div>
+
+<script>
+  document.querySelector(".approach-button1").addEventListener("click", () => {
+    const overlay = document.getElementById("fade-overlay");
+    overlay.classList.add("fade-out");
+    overlay.style.opacity = "1";
+    setTimeout(() => {
+      window.location.href = "narrativa.html"; // Replace with your actual next page
+    }, 500); // Match the animation duration (1s)
+  });
+</script>
+<script>
+  window.addEventListener("load", () => {
+    const overlay = document.getElementById("fade-overlay");
+    overlay.style.transition = "opacity 0.5s ease";
+    overlay.style.opacity = 0;
+  });
+</script>
+</body>
+</html>

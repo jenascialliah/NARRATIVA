@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prologue Completed!</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('images/complete_background.png') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+    }
+
+    .dialogue-box {
+      position: absolute;
+      bottom: 220px;
+      left: 500px;
+    }
+
+    .dialogue-box img {
+      width: 500px;
+    }
+
+    .nyxa-box {
+  position: absolute;
+  top: 300px; /* Moves it below the buttons */
+  left: 75%;
+  transform: translateX(-50%);
+  width: 200px; /* Makes it smaller */
+}
+
+    .buttons {
+      position: absolute;
+      top: 150px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .buttons img {
+      width: 180px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .buttons img:hover {
+      transform: scale(1.05);
+    }
+
+    .character {
+  position: absolute;
+  bottom: 0;
+  left: 17%;
+  transform: translate(-50%, 0px);
+  height: 650px; /* Adjusted from 650px to appear lower */
+}
+    
+.dialogue-bg {
+  position: absolute;
+  top: -50px;
+  left: -30px;
+  z-index: 0;
+}
+
+.dialogue-text {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+
+  </style>
+<style>
+    .fade-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s ease;
+  z-index: 9999;
+}
+
+.fade-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Dialogue -->
+    <div class="dialogue-box">
+      <img class="dialogue-bg" src="images/complete_dialogue_bg.png" alt="Dialogue Background" style="width: 700px;">
+      <img class="dialogue-text" src="images/complete_dialogue.png" alt="Dialogue">
+      
+
+    </div>
+
+   <!-- Buttons -->
+<div class="buttons">
+  <a href="select-level.html"><img src="images/view_book.png" alt="View Book Button"></a>
+  <a ><img src="images/next_btn.png" alt="Next Button"onclick="goToMenu()"></a>
+</div>
+
+<!-- Nyxa face and nameplate below buttons -->
+<div class="nyxa-box" >
+  <img src="images/nyxa_withcharac.png" alt="Nyxa Info" style="width: 400px; bottom: 0px; ">
+</div>
+
+
+    <!-- Nyxa character below buttons -->
+    <img src="images/character1.png" alt="Nyxa Character" class="character" style="width: 500px;">
+  </div>
+    <!-- Fade overlay -->
+<div id="fade-overlay" class="fade-overlay"></div>
+
+<script>
+  function goToMenu() {
+  const fade = document.getElementById('fade-overlay');
+  fade.classList.add('active');
+  setTimeout(() => {
+    window.location.href = 'first_page.html';
+  }, 1000);
+}
+</script>
+</body>
+</html>

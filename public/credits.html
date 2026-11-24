@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Credits - Narrativa</title>
+  <link rel="stylesheet" href="credits.css">
+  <style>
+    /* Fade-out overlay */
+    .fade-out {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
+      z-index: 999;
+    }
+    .fade-out.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+  </style>
+</head>
+<body>
+  <!-- Credit List Image -->
+  <img src="images/creditlist.png" alt="Credits" class="credit-list">
+
+  <!-- Back to Menu Button -->
+  <img src="images/backtomenu.png" alt="Back to Menu" class="back-button" onclick="goToMenu()" >
+
+  <!-- Fade overlay -->
+  <div class="fade-out" id="fade"></div>
+
+  <script>
+    function goToMenu() {
+      const fade = document.getElementById('fade');
+      fade.classList.add('active');
+      setTimeout(() => {
+        window.location.href = 'narrativa.html';
+      }, 1000); // Duration should match the CSS transition time
+    }
+  </script>
+</body>
+</html>

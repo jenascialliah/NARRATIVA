@@ -1,0 +1,12 @@
+.vscode/
+.idea/
+.env
+.env.*
+!.env.example
+*.zip
+*.log
+*.pem
+*.key
+*.publishsettings
+.DS_Store
+Thumbs.db

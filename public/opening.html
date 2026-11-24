@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Narrativa Opening</title>
+  <link rel="stylesheet" href="opening.css">
+</head>
+<body>
+  <div class="background">
+    <!-- Mysterious character's dialogue section -->
+    <div class="dialogue-box">
+      <img src="images/mysterious_character.png" alt="mysterious" class="mysterious">
+      <img src="images/Rectangle 4.png" alt="dialogue background" class="dialogue-bg">
+      <img src="images/questionmark_dialogue.png" alt="question mark" class="question-icon">
+      <img src="images/long_dialogue.png" alt="long dialogue" class="long-dialogue">
+    </div>
+
+    <!-- Click to proceed button -->
+    <img src="images/clicktoproceed.png" alt="click to proceed" class="click-proceed">
+
+
+    <!-- Main character (YOU) section -->
+   <div class="player-section">
+     <div class="dialogue-labels">
+    <img src="images/you_dialogue.png" alt="you label" class="you-label">
+    <img src="images/listening.png" alt="listening" class="listening-text">
+  </div>
+  <img src="images/character2.png" alt="you" class="you-character">
+
+</div>
+  </div>
+  <!-- Fade overlay -->
+<div id="fade-overlay" style="opacity: 1;"></div>
+
+<script>
+  document.querySelector(".click-proceed").addEventListener("click", () => {
+    const overlay = document.getElementById("fade-overlay");
+    overlay.classList.add("fade-out");
+    overlay.style.opacity = "1";
+    setTimeout(() => {
+      window.location.href = "opening2.html"; // Replace with your actual next page
+    }, 500); // Match the animation duration (1s)
+  });
+</script>
+<script>
+  window.addEventListener("load", () => {
+    const overlay = document.getElementById("fade-overlay");
+    overlay.style.transition = "opacity 0.5s ease";
+    overlay.style.opacity = 0;
+  });
+</script>
+
+</body>
+</html>

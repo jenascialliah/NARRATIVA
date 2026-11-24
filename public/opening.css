@@ -1,0 +1,144 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Courier New', monospace;
+  overflow: hidden;
+}
+
+.background {
+  background-image: url('images/backgroundtrees.png');
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* Mysterious character's dialogue section */
+.dialogue-box {
+  position: absolute;
+  top: 0px;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 900px;
+}
+
+.dialogue-bg {
+  width: 2000px;
+  height: 300px;
+  left: 0%;
+}
+
+.question-icon {
+  position: absolute;
+  top: 20%;
+  left: 105%;
+  width: 30%;
+}
+
+.mysterious{
+  position: absolute;
+  top: 20%;
+  left: 60%;
+  width: 40%;
+}
+
+/* Click to proceed button */
+.click-proceed {
+  position: absolute;
+  top: 60%;
+  left: 120px;
+  width: 40%;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.click-proceed:hover{
+   transform: scale(1.05); 
+}
+/* Player character section */
+.player-section {
+  position: absolute;
+  bottom: 0px;
+  left: 79%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dialogue-labels {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+   position: relative;
+  top: 100px; 
+
+}
+.you-character {
+  height: 500px;
+  width: 400px;
+}
+
+.you-label {
+  height: 70px;
+  margin-bottom: 0px;
+}
+
+.listening-text {
+  height: 70px;
+  margin-bottom: 0px;
+}
+
+.start-a-story{
+  position: absolute;
+  top: 60%;
+  left: 200px;
+  height: 40px;
+  width: 200px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.start-a-story:hover{
+  transform: scale(1.05); 
+}
+
+#fade-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999;
+  transition: opacity 1s ease;
+}
+
+#fade-overlay.fade-out {
+  opacity: 1;
+}
+#fade-overlay.fade-in {
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+.long-dialogue {
+  position: absolute;
+  top: 50%;
+  left: 105%;
+  width: 85%;
+  animation: slideInFromRight 2s ease-out forwards;
+}

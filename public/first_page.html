@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Narrativa - First Page</title>
+  <link rel="stylesheet" href="prologue.css">
+  <style>
+    .modal-selection {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      z-index: 999;
+    }
+    .modal-selection img {
+      width: 200px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .modal-selection img:hover {
+      transform: scale(1.1);
+    }
+    .story-cell {
+      position: relative;
+    }
+    .story-cell img.character {
+      position: absolute;
+      bottom: 0;
+      width: 80px;
+      z-index: 5;
+      transform: translateX(-50%);
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <img src="images/backtochap1_btn.png" alt="Back" onclick="goToChapter()"/>
+    <img src="images/hint_btn.png" alt="Hint" onclick="goToMenu()"/>
+  </div>
+
+  <div class="title">
+    <img src="images/first_dialogue.png" alt="Prologue Title" />
+  </div>
+
+  <div class="story-board">
+    <div class="story-cell" id="story1">
+      <img src="images/story_board_bg.png" alt="Storyboard 1" />
+      <img class="delete-btn" src="images/delete_btn.png" alt="Delete" />
+    </div>
+    <div class="story-cell" id="story2">
+      <img src="images/story_board_bg.png" alt="Storyboard 2" />
+      <img class="delete-btn" src="images/delete_btn.png" alt="Delete" />
+    </div>
+    <div class="story-cell" id="story3">
+      <img src="images/story_board_bg.png" alt="Storyboard 3" />
+      <img class="delete-btn" src="images/delete_btn.png" alt="Delete" />
+    </div>
+  </div>
+
+  <div class="bottom-section">
+    <div class="left-box">
+      <img class="bg" src="images/rectangle_castle_fight_.png" alt="Castle Fight" />
+      <div class="icon-btns1" style="left: 115px;">
+        <img id="fightBtn" src="images/meeting.png" alt="Meeting" />
+        <img id="loveBtn" src="images/fall_in_love.png" alt="Fall In Love" />
+      </div>
+    </div>
+
+    <div class="right-box">
+      <img class="bg" src="images/rectangle_castle_fight_.png" alt="Characters" />
+      <div class="char-btns">
+        <img src="images/juliet_head_sad.png" alt="Juliet" onclick="showJulietModal()" />
+        <img src="images/romeo_head.png" alt="Romeo" onclick="showRomeoModal()" />
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-btns">
+    <img src="images/clear_btn.png" alt="Clear" onclick="clearStoryBoard()" />
+    <img src="images/check_btn.png" alt="Check" onclick="checkStoryBoard()" />
+  </div>
+
+  <!-- Juliet Modal -->
+  <div class="modal-selection" id="julietModal">
+    <img src="images/juliet_sad.png" alt="Juliet Sad" onclick="selectCharacter('images/juliet_sad.png')">
+    <img src="images/juliet_inlove.png" alt="Juliet In Love" onclick="selectCharacter('images/juliet_inlove.png')">
+  </div>
+
+  <!-- Romeo Modal -->
+  <div class="modal-selection" id="romeoModal">
+    <img src="images/romeo_shock.png" alt="Romeo Shock" onclick="selectCharacter('images/romeo_shock.png')">
+    <img src="images/romeo_inlove.png" alt="Romeo In Love" onclick="selectCharacter('images/romeo_inlove.png')">
+  </div>
+
+  <script>
+    let selectedCharacter = null;
+    let selectedCastle = null;
+
+    document.querySelectorAll('.story-cell').forEach(cell => {
+      const mainImg = cell.querySelector('img:not(.delete-btn):not(.character)');
+      const deleteBtn = cell.querySelector('.delete-btn');
+
+      cell.addEventListener('click', () => {
+        if (selectedCastle && mainImg) {
+          mainImg.src = selectedCastle;
+          selectedCastle = null;
+        } else if (selectedCharacter) {
+          const offset = (cell.querySelectorAll('img.character').length - 0.5) * 160;
+          const img = document.createElement('img');
+          img.src = selectedCharacter;
+          img.classList.add('character');
+          img.style.left = `calc(50% + ${offset}px)`;
+          cell.appendChild(img);
+          selectedCharacter = null;
+        }
+      });
+
+      if (deleteBtn) {
+        deleteBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (mainImg) mainImg.src = 'images/story_board_bg.png';
+          cell.querySelectorAll('img.character').forEach(img => img.remove());
+        });
+      }
+    });
+
+    document.getElementById('fightBtn').addEventListener('click', () => {
+      selectedCastle = 'images/balcony.png';
+      selectedCharacter = null;
+    });
+
+    document.getElementById('loveBtn').addEventListener('click', () => {
+      selectedCastle = 'images/meetup_place.png';
+      selectedCharacter = null;
+    });
+
+    function showJulietModal() {
+      document.getElementById('julietModal').style.display = 'flex';
+    }
+
+    function showRomeoModal() {
+      document.getElementById('romeoModal').style.display = 'flex';
+    }
+
+    function selectCharacter(src) {
+      selectedCharacter = src;
+      selectedCastle = null;
+      document.getElementById('julietModal').style.display = 'none';
+      document.getElementById('romeoModal').style.display = 'none';
+    }
+
+    function clearStoryBoard() {
+      selectedCastle = null;
+      selectedCharacter = null;
+      document.querySelectorAll('.story-cell').forEach(cell => {
+        const mainImg = cell.querySelector('img:not(.delete-btn):not(.character)');
+        if (mainImg) mainImg.src = 'images/story_board_bg.png';
+        cell.querySelectorAll('img.character').forEach(c => c.remove());
+      });
+    }
+
+    function checkStoryBoard() {
+      const expected = [
+        { bg: 'balcony.png', chars: ['juliet_sad.png'] },
+        { bg: 'balcony.png', chars: ['juliet_sad.png', 'romeo_shock.png'] },
+        { bg: 'meetup_place.png', chars: ['juliet_inlove.png', 'romeo_inlove.png'] }
+      ];
+
+      const cells = document.querySelectorAll('.story-cell');
+      let isCorrect = true;
+
+      cells.forEach((cell, index) => {
+        const bg = cell.querySelector('img:not(.delete-btn):not(.character)').src;
+        const characters = Array.from(cell.querySelectorAll('img.character')).map(img => img.src.split('/').pop());
+
+        if (!bg.includes(expected[index].bg) || characters.length !== expected[index].chars.length || !expected[index].chars.every(c => characters.includes(c))) {
+          isCorrect = false;
+        }
+      });
+
+      window.location.href = isCorrect ? 'completed_firstpage.html' : 'incorrect2.html';
+    }
+
+    function goToChapter() {
+      setTimeout(() => {
+        window.location.href = 'select-level.html';
+      }, 300);
+    }
+
+    function goToMenu() {
+      const fade = document.getElementById('fade-overlay');
+      fade.classList.add('active');
+      setTimeout(() => {
+        window.location.href = 'hint2.html';
+      }, 1000);
+    }
+  </script>
+
+  <div id="fade-overlay" class="fade-overlay"></div>
+  <style>
+    .fade-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
+      z-index: 9999;
+    }
+
+    .fade-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+  </style>
+</body>
+</html>

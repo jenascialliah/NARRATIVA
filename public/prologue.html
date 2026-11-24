@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Narrativa - Prologue</title>
+  <link rel="stylesheet" href="prologue.css">
+  <style>
+    .castle-selection {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      z-index: 999;
+    }
+    .castle-selection img {
+      width: 200px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .castle-selection img:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <img src="images/backtochap1_btn.png" alt="Back" onclick="goToChapter()"/>
+    <img src="images/hint_btn.png" alt="Hint" onclick="goToMenu()"/>
+  </div>
+
+  <div class="title">
+    <img src="images/prologue_dialogue.png" alt="Prologue Title" />
+  </div>
+
+  <div class="story-board">
+    <div class="story-cell" id="story1">
+      <img src="images/story_board_bg.png" alt="Storyboard 1" />
+      <img class="delete-btn" src="images/delete_btn.png" alt="Delete" />
+    </div>
+    <div class="story-cell" id="story2">
+      <img src="images/story_board_bg.png" alt="Storyboard 2" />
+      <img class="delete-btn" src="images/delete_btn.png" alt="Delete" />
+    </div>
+    <div class="story-cell" id="story3">
+      <img src="images/story_board_bg.png" alt="Storyboard 3" />
+      <img class="delete-btn" src="images/delete_btn.png" alt="Delete" />
+    </div>
+  </div>
+
+  <div class="bottom-section">
+    <div class="left-box">
+      <img class="bg" src="images/rectangle_castle_fight_.png" alt="Castle Fight" />
+      <div class="icon-btns">
+        <img src="images/fight_btn.png" alt="Fight" />
+        <img id="castleBtn" src="images/castle_btn.png" alt="Castle" />
+      </div>
+    </div>
+
+    <div class="right-box">
+      <img class="bg" src="images/rectangle_castle_fight_.png" alt="Characters" />
+      <div class="char-btns">
+        <img src="images/lord_montague.png" alt="Montague" />
+        <img src="images/lord_capulet.png" alt="Capulet" />
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-btns">
+    <img src="images/clear_btn.png" alt="Clear" />
+    <img src="images/check_btn.png" alt="Check" />
+  </div>
+
+  <div class="castle-selection" id="castleSelection">
+    <img src="images/red_castle.png" alt="Red Castle" onclick="insertCastle('images/red_castle.png')">
+    <img src="images/blue_castle.png" alt="Blue Castle" onclick="insertCastle('images/blue_castle.png')">
+
+  </div>
+<script>
+  const castleBtn = document.getElementById('castleBtn');
+  const castleSelection = document.getElementById('castleSelection');
+  let selectedCastle = null;
+  let selectedCharacter = null;
+
+  // Show castle selection
+  castleBtn.addEventListener('click', () => {
+    selectedCharacter = null;
+    castleSelection.style.display = 'flex';
+  });
+  const fightBtn = document.querySelector('img[alt="Fight"]');
+
+fightBtn.addEventListener('click', () => {
+  selectedCastle = 'images/fight_background.png';
+  selectedCharacter = null;
+
+  const storyCells = document.querySelectorAll('.story-cell');
+
+  storyCells.forEach(cell => {
+    // Replace cell with a clone to clear old event listeners
+    const newCell = cell.cloneNode(true);
+    cell.parentNode.replaceChild(newCell, cell);
+
+    const mainImg = newCell.querySelector('img:not(.delete-btn):not(.character)');
+    const deleteBtn = newCell.querySelector('.delete-btn');
+
+    newCell.addEventListener('click', () => {
+      if (selectedCastle && mainImg) {
+        mainImg.src = selectedCastle;
+        selectedCastle = null;
+      }
+    });
+
+    // Reattach delete button logic
+    if (deleteBtn) {
+      deleteBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const mainImg = newCell.querySelector('img:not(.delete-btn)');
+        if (mainImg) {
+          mainImg.src = defaultStoryboard;
+        }
+        const characters = newCell.querySelectorAll('img.character');
+        characters.forEach(img => img.remove());
+      });
+    }
+  });
+});
+
+
+  function insertCastle(src) {
+    selectedCastle = src;
+    selectedCharacter = null;
+    castleSelection.style.display = 'none';
+
+    const storyCells = document.querySelectorAll('.story-cell');
+
+    storyCells.forEach(cell => {
+      const newCell = cell.cloneNode(true);
+      cell.parentNode.replaceChild(newCell, cell);
+
+      const mainImg = newCell.querySelector('img:not(.delete-btn):not(.character)');
+      const deleteBtn = newCell.querySelector('.delete-btn');
+
+      newCell.addEventListener('click', () => {
+        if (selectedCastle && mainImg) {
+          mainImg.src = selectedCastle;
+          selectedCastle = null;
+        }
+      });
+
+      // Restore delete functionality after cloning
+      if (deleteBtn) {
+        deleteBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const mainImg = newCell.querySelector('img:not(.delete-btn)');
+          if (mainImg) {
+            mainImg.src = defaultStoryboard;
+          }
+          const characters = newCell.querySelectorAll('img.character');
+          characters.forEach(img => img.remove());
+        });
+      }
+    });
+  }
+
+  const defaultStoryboard = 'images/story_board_bg.png';
+
+  const deleteButtons = document.querySelectorAll('.delete-btn');
+  deleteButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const cell = btn.closest('.story-cell');
+      const mainImg = cell.querySelector('img:not(.delete-btn)');
+      if (mainImg) {
+        mainImg.src = defaultStoryboard;
+      }
+      const characters = cell.querySelectorAll('img.character');
+      characters.forEach(img => img.remove());
+    });
+  });
+
+  const charButtons = document.querySelectorAll('.char-btns img');
+  charButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      selectedCastle = null;
+      if (button.alt.includes('Montague')) {
+        selectedCharacter = 'images/lord_montague_full.png';
+      } else if (button.alt.includes('Capulet')) {
+        selectedCharacter = 'images/lord_capulet_full.png';
+      }
+
+      const storyCells = document.querySelectorAll('.story-cell');
+      storyCells.forEach(cell => {
+        const newCell = cell.cloneNode(true);
+        cell.parentNode.replaceChild(newCell, cell);
+
+        const mainImg = newCell.querySelector('img:not(.delete-btn):not(.character)');
+        const deleteBtn = newCell.querySelector('.delete-btn');
+
+        newCell.addEventListener('click', () => {
+          if (selectedCharacter) {
+            const existingChars = newCell.querySelectorAll('img.character').length;
+            const offset = (existingChars - 0.5) * 160;
+
+            const img = document.createElement('img');
+            img.src = selectedCharacter;
+            img.classList.add('character');
+            img.style.position = 'absolute';
+            img.style.bottom = '0';
+            img.style.left = `calc(50% + ${offset}px)`;
+            img.style.transform = 'translateX(-50%)';
+            img.style.width = '80px';
+            img.style.zIndex = '5';
+            newCell.appendChild(img);
+
+            selectedCharacter = null;
+          }
+        });
+
+        if (deleteBtn) {
+          deleteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const mainImg = newCell.querySelector('img:not(.delete-btn)');
+            if (mainImg) {
+              mainImg.src = defaultStoryboard;
+            }
+            const characters = newCell.querySelectorAll('img.character');
+            characters.forEach(img => img.remove());
+          });
+        }
+      });
+    });
+  });
+
+  const storyCells = document.querySelectorAll('.story-cell');
+  storyCells.forEach(cell => {
+    cell.addEventListener('click', () => {
+      const mainImg = cell.querySelector('img:not(.delete-btn):not(.character)');
+
+      if (selectedCastle && mainImg) {
+        mainImg.src = selectedCastle;
+        selectedCastle = null;
+      }
+
+      if (selectedCharacter) {
+        const existingChars = cell.querySelectorAll('img.character').length;
+        const offset = (existingChars - 0.5) * 160;
+
+        const img = document.createElement('img');
+        img.src = selectedCharacter;
+        img.classList.add('character');
+        img.style.position = 'absolute';
+        img.style.bottom = '0';
+        img.style.left = `calc(50% + ${offset}px)`;
+        img.style.transform = 'translateX(-50%)';
+        img.style.width = '80px';
+        img.style.zIndex = '5';
+        cell.appendChild(img);
+
+        selectedCharacter = null;
+      }
+    });
+  });
+
+  const clearButton = document.querySelector('img[alt="Clear"]');
+  if (clearButton) {
+    clearButton.addEventListener('click', () => {
+      selectedCastle = null;
+      selectedCharacter = null;
+      const storyCells = document.querySelectorAll('.story-cell');
+      storyCells.forEach(cell => {
+        const mainImg = cell.querySelector('img:not(.delete-btn)');
+        if (mainImg) {
+          mainImg.src = defaultStoryboard;
+        }
+        const characters = cell.querySelectorAll('img.character');
+        characters.forEach(img => img.remove());
+      });
+    });
+  }
+
+  const checkButton = document.querySelector('img[alt="Check"]');
+  if (checkButton) {
+    checkButton.addEventListener('click', () => {
+      const storyCells = document.querySelectorAll('.story-cell');
+      const expected = [
+        { bg: 'blue_castle.png', chars: ['lord_capulet_full.png'] },
+        { bg: 'red_castle.png', chars: ['lord_montague_full.png'] },
+        { bg: 'fight_background.png', chars: ['lord_capulet_full.png', 'lord_montague_full.png'] }
+      ];
+
+      let correct = true;
+
+      storyCells.forEach((cell, index) => {
+        const mainImg = cell.querySelector('img:not(.delete-btn):not(.character)');
+        const characterImgs = Array.from(cell.querySelectorAll('img.character'));
+        const characterNames = characterImgs.map(img => img.src.split('/').pop());
+
+        const expectedChars = expected[index].chars;
+        const expectedBg = expected[index].bg;
+
+        const hasCorrectBg = mainImg && mainImg.src.includes(expectedBg);
+        const hasCorrectChars = expectedChars.every(char => characterNames.includes(char)) && characterNames.length === expectedChars.length;
+
+        if (!(hasCorrectBg && hasCorrectChars)) {
+          correct = false;
+        }
+      });
+
+      window.location.href = correct ? 'completed_prologue.html' : 'incorrect1.html';
+    });
+  }
+</script>
+<script>
+  function goToChapter() {
+    // Optional: add a delay for animation (e.g. 300ms)
+    setTimeout(() => {
+      window.location.href = 'select-level.html';
+    }, 300);
+  }
+
+  function goToHint() {
+    setTimeout(() => {
+      window.location.href = 'hint1.html';
+    }, 0);
+  }
+</script>
+      <!-- Fade overlay -->
+<div id="fade-overlay" class="fade-overlay"></div>
+
+<script>
+  function goToMenu() {
+  const fade = document.getElementById('fade-overlay');
+  fade.classList.add('active');
+  setTimeout(() => {
+    window.location.href = 'hint1.html';
+  }, 1000);
+}
+</script>
+<style>
+    .fade-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s ease;
+  z-index: 9999;
+}
+
+.fade-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+  </style>
+
+</body>
+</html>

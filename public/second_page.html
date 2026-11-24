@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Narrativa - Second Page</title>
+  <link rel="stylesheet" href="prologue.css" />
+  <style>
+    .modal-bg {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .modal-bg img {
+      width: 200px;
+      cursor: pointer;
+      margin: 0 20px;
+      transition: transform 0.2s ease;
+    }
+
+    .modal-bg img:hover {
+      transform: scale(1.1);
+    }
+
+    .story-cell {
+      position: relative;
+    }
+
+    .story-cell img.character {
+      position: absolute;
+      bottom: 0;
+      width: 80px;
+      z-index: 5;
+      transform: translateX(-50%);
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <img src="images/backtochap1_btn.png" alt="Back" onclick="goToChapter()"/>
+    <img src="images/hint_btn.png" alt="Hint" onclick="goToMenu()"/>
+  </div>
+
+  <div class="title">
+    <img src="images/second_page_dialogue.png" alt="Second Page Dialogue" />
+  </div>
+
+  <div class="story-board">
+    <div class="story-cell" id="story1">
+      <img src="images/story_board_bg.png" alt="Storyboard 1" />
+      <img class="delete-btn" src="images/delete_btn.png" alt="Delete" />
+    </div>
+    <div class="story-cell" id="story2">
+      <img src="images/story_board_bg.png" alt="Storyboard 2" />
+      <img class="delete-btn" src="images/delete_btn.png" alt="Delete" />
+    </div>
+    <div class="story-cell" id="story3">
+      <img src="images/story_board_bg.png" alt="Storyboard 3" />
+      <img class="delete-btn" src="images/delete_btn.png" alt="Delete" />
+    </div>
+  </div>
+
+  <div class="bottom-section">
+    <div class="left-box">
+      <img class="bg" src="images/rectangle_castle_fight_.png" alt="Background Options" />
+      <div class="icon-btns1" style="left: 40px;">
+        <img id="fightBtn" src="images/fight_btn2.png" alt="Fight" />
+        <img id="marriageBtn" src="images/marriage.png" alt="Marriage" />
+        <img id="meetingBtn" src="images/meeting.png" alt="Meeting" />
+      </div>
+    </div>
+
+    <div class="right-box">
+      <img class="bg" src="images/rectangle_castle_fight_.png" alt="Characters" />
+      <div class="char-btns1" style="left: 40px; top: 30px;">
+        <img src="images/juliet_head.png" alt="Juliet" onclick="openModal('juliet')" />
+        <img src="images/romeo_head.png" alt="Romeo" onclick="openModal('romeo')" />
+        <img src="images/lord_capulet.png" alt="Capulet" onclick="insertCharacter('images/lord_capulet_angry.png')" />
+        <img src="images/friar_head.png" alt="Friar" onclick="openModal('friar')" />
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-btns">
+    <img src="images/clear_btn.png" alt="Clear" onclick="clearStoryBoard()" />
+    <img src="images/check_btn.png" alt="Check" onclick="checkStoryBoard()" />
+  </div>
+
+  <!-- Modal: Juliet -->
+  <div id="julietModal" class="modal-bg">
+    <img src="images/juliet_sad.png" alt="Sad Juliet" onclick="selectCharacter('images/juliet_sad.png', 'julietModal')" />
+    <img src="images/juliet_inlove.png" alt="Inlove Juliet" onclick="selectCharacter('images/juliet_inlove.png', 'julietModal')" />
+  </div>
+
+  <!-- Modal: Romeo -->
+  <div id="romeoModal" class="modal-bg">
+    <img src="images/romeo_inlove.png" alt="Inlove Romeo" onclick="selectCharacter('images/romeo_inlove.png', 'romeoModal')" />
+    <img src="images/romeo_shock2.png" alt="Shock Romeo" onclick="selectCharacter('images/romeo_shock.png', 'romeoModal')" />
+  </div>
+
+  <!-- Modal: Friar -->
+  <div id="friarModal" class="modal-bg">
+    <img src="images/friar_concern.png" alt="Concerned Friar" onclick="selectCharacter('images/friar_concern.png', 'friarModal')" />
+    <img src="images/friar_happy.png" alt="Happy Friar" onclick="selectCharacter('images/friar_happy.png', 'friarModal')" />
+  </div>
+<script>
+  let selectedCastle = null;
+  let selectedCharacter = null;
+
+  const backgrounds = {
+    fight: "images/red_castle.png",
+    marriage: "images/church_inside.png",
+    meeting: "images/church_outside.png"
+  };
+
+  document.getElementById("fightBtn").onclick = () => {
+    selectedCastle = backgrounds.fight;
+    selectedCharacter = null;
+  };
+
+  document.getElementById("marriageBtn").onclick = () => {
+    selectedCastle = backgrounds.marriage;
+    selectedCharacter = null;
+  };
+
+  document.getElementById("meetingBtn").onclick = () => {
+    selectedCastle = backgrounds.meeting;
+    selectedCharacter = null;
+  };
+
+  function openModal(character) {
+    document.getElementById(`${character}Modal`).style.display = "flex";
+  }
+
+  function selectCharacter(imagePath, modalId) {
+    selectedCharacter = imagePath;
+    selectedCastle = null;
+    document.getElementById(modalId).style.display = "none";
+  }
+
+  function insertCharacter(imagePath) {
+    selectedCharacter = imagePath;
+    selectedCastle = null;
+  }
+
+  function clearStoryBoard() {
+      selectedCastle = null;
+      selectedCharacter = null;
+    document.querySelectorAll(".story-cell").forEach(cell => {
+      const mainImg = cell.querySelector('img:not(.delete-btn):not(.character)');
+      if (mainImg) mainImg.src = "images/story_board_bg.png";
+      cell.querySelectorAll("img.character").forEach(c => c.remove());
+    });
+  }
+
+  function checkStoryBoard() {
+    const expected = [
+      {
+        bg: "red_castle.png",
+        chars: ["lord_capulet_angry.png", "juliet_sad.png"]
+      },
+      {
+        bg: "church_outside.png",
+        chars: ["romeo_shock.png", "friar_concern.png"]
+      },
+      {
+        bg: "church_inside.png",
+        chars: ["juliet_inlove.png", "friar_happy.png", "romeo_inlove.png"]
+      }
+    ];
+
+    const cells = document.querySelectorAll(".story-cell");
+    let isCorrect = true;
+
+    cells.forEach((cell, index) => {
+      const bg = cell.querySelector('img:not(.delete-btn):not(.character)').src;
+      const characters = Array.from(cell.querySelectorAll("img.character")).map(img =>
+        img.src.split("/").pop()
+      );
+
+      const expectedChars = expected[index].chars;
+      const bgName = bg.split("/").pop();
+
+      if (
+        !bgName.includes(expected[index].bg) ||
+        characters.length !== expectedChars.length ||
+        !expectedChars.every(char => characters.includes(char))
+      ) {
+        isCorrect = false;
+      }
+    });
+
+    window.location.href = isCorrect ? "completed_secondpage.html" : "incorrect3.html";
+  }
+
+  function applyStoryCellEvents() {
+    const defaultStoryboard = "images/story_board_bg.png";
+
+    document.querySelectorAll(".story-cell").forEach(cell => {
+      const mainImg = cell.querySelector('img:not(.delete-btn):not(.character)');
+      const deleteBtn = cell.querySelector(".delete-btn");
+
+      cell.onclick = function () {
+  if (selectedCastle && mainImg) {
+    mainImg.src = selectedCastle;
+    selectedCastle = null;
+  }
+
+  if (selectedCharacter) {
+    const img = document.createElement("img");
+    img.src = selectedCharacter;
+    img.classList.add("character");
+
+    const isThirdBoard = cell.id === "story3";
+    const characterName = selectedCharacter.split("/").pop();
+
+    if (isThirdBoard) {
+      if (characterName === "friar_happy.png") {
+        // Special case: friar happy is centered & raised
+        img.style.left = "50%";
+        img.style.bottom = "60px";
+      } else {
+        // All other characters in Storyboard 3 get tighter grouped layout
+        const characters = Array.from(cell.querySelectorAll("img.character"))
+          .filter(c => c.src.split("/").pop() !== "friar_happy.png");
+        const positionIndex = characters.length;
+        const offsets = [-50, 50, -90, 90]; // if more than 2 characters
+
+        const offset = offsets[positionIndex] || 0;
+        img.style.left = `calc(50% + ${offset}px)`;
+        img.style.bottom = "20px";
+      }
+    } else {
+      // Normal layout for Storyboard 1 & 2
+      const existingChars = cell.querySelectorAll("img.character").length;
+      const offset = (existingChars - 0.5) * 160;
+      img.style.left = `calc(50% + ${offset}px)`;
+      img.style.bottom = "0";
+    }
+
+    cell.appendChild(img);
+    selectedCharacter = null;
+  }
+};
+
+      if (deleteBtn) {
+        deleteBtn.onclick = function (e) {
+          e.stopPropagation();
+          if (mainImg) mainImg.src = defaultStoryboard;
+          cell.querySelectorAll("img.character").forEach(c => c.remove());
+        };
+      }
+    });
+  }
+
+  function goToChapter() {
+    window.location.href = "select-level.html";
+  }
+
+  function goToHint() {
+    window.location.href = "hint3.html";
+  }
+
+  document.addEventListener("DOMContentLoaded", applyStoryCellEvents);
+</script>
+      <!-- Fade overlay -->
+<div id="fade-overlay" class="fade-overlay"></div>
+
+<script>
+  function goToMenu() {
+  const fade = document.getElementById('fade-overlay');
+  fade.classList.add('active');
+  setTimeout(() => {
+    window.location.href = 'hint3.html';
+  }, 1000);
+}
+</script>
+<style>
+    .fade-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s ease;
+  z-index: 9999;
+}
+
+.fade-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+  </style>
+</body>
+</html>

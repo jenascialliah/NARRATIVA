@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Narrativa</title>
+  <link rel="stylesheet" href="narrativa.css" />
+  <style>
+    /* Fade-out overlay */
+    .fade-out {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
+      z-index: 999;
+    }
+
+    .fade-out.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+   
+    <img src="images/NARRATIVA LOGO.png" alt="Narrativa Logo" class="logo" />
+
+    <div class="buttons">
+      <a href="#" onclick="goToStart(event)">
+        <img src="images/START BUTTON.png" alt="Start Button" class="btn" />
+      </a>
+      <a href="#" onclick="goToCredits(event)">
+        <img src="images/CREDITS BUTTON.png" alt="Credits Button" class="btn" />
+      </a>
+    </div>
+  </div>
+ <audio id="bg-music" loop preload="none">
+  <source src="images/narrativa_menu_chime.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+  <button type="button" id="music-toggle" aria-pressed="false">Enable music</button>
+  <!-- Fade-out overlay -->
+  <div class="fade-out" id="fade"></div>
+
+  <script>
+    const music = document.getElementById("bg-music");
+    const musicToggle = document.getElementById("music-toggle");
+    musicToggle.addEventListener("click", async () => {
+      if (!music.paused) { music.pause(); return; }
+      try { await music.play(); } catch { musicToggle.textContent = "Retry music"; }
+    });
+    function updateMusicButton() {
+      musicToggle.textContent = music.paused ? "Enable music" : "Mute music";
+      musicToggle.setAttribute("aria-pressed", String(!music.paused));
+    }
+    music.addEventListener("play", updateMusicButton);
+    music.addEventListener("pause", updateMusicButton);
+    function goToCredits(event) {
+      event.preventDefault();
+      const fade = document.getElementById('fade');
+      fade.classList.add('active');
+      setTimeout(() => {
+        window.location.href = 'credits.html';
+      }, 1000); // Match transition duration
+    }
+
+    function goToStart(event) {
+      event.preventDefault();
+      const fade = document.getElementById('fade');
+      fade.classList.add('active');
+      setTimeout(() => {
+        window.location.href = 'start.html';
+      }, 1000); // Match transition duration
+    }
+  </script>
+</body>
+</html>
